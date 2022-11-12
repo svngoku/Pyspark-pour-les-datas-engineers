@@ -46,9 +46,11 @@ sc.defaultMinPartitions #Default minimum number of partitions for RDDs
 
 ```python
 from pyspark import SparkConf, SparkContext
-conf = (SparkConf()
-     .setMaster("local")
-     .setAppName("My app")
-     . set   ("spark. executor.memory",   "lg"))
+conf = (
+    SparkConf()
+    .setMaster("local")
+    .setAppName("My app")
+    .set("spark. executor.memory","lg")
+)
 sc = SparkContext(conf = conf)
-
+```
