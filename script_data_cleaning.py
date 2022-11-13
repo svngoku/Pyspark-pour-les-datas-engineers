@@ -136,3 +136,71 @@ voter_df.show()
 # |04/25/2018|Councilmember|     Sandy  Greyson|    [Sandy, Greyson]|     Sandy|  Greyson|                Sandy|
 # |04/25/2018|Councilmember| Jennifer S.  Gates|[Jennifer, S., Ga...|  Jennifer|    Gates|          Jennifer S.|
 # +----------+-------------+-------------------+--------------------+----------+---------+---------------------+
+
+# Select all the unique council voters
+voter_df = df.select(df["VOTER NAME"]).distinct()
+
+# Count the rows in voter_df
+print("\nThere are %d rows in the voter_df DataFrame.\n" % voter_df.count())
+
+# Add a ROW_ID
+voter_df = voter_df.withColumn('ROW_ID', F.monotonically_increasing_id())
+
+# Show the rows with 10 highest IDs in the set
+voter_df.orderBy(voter_df.ROW_ID.desc()).show(10)
+# +--------------------+------+
+# |          VOTER NAME|ROW_ID|
+# +--------------------+------+
+# |        Lee Kleinman|    35|
+# |         Erik Wilson|    33|
+# |  the  final  201...|    34|
+# |  the  final   20...|    32|
+# | Carolyn King Arnold|    31|
+# | Rickey D.  Callahan|    30|
+# |   the   final  2...|    29|
+# |    Monica R. Alonzo|    28|
+# |     Lee M. Kleinman|    27|
+# |   Jennifer S. Gates|    26|
+# +--------------------+------+
+
+# Print the number of partitions in each DataFrame
+print("\nThere are %d partitions in the voter_df DataFrame.\n" % voter_df.rdd.getNumPartitions())
+print("\nThere are %d partitions in the voter_df_single DataFrame.\n" % voter_df_single.rdd.getNumPartitions())
+
+# Add a ROW_ID field to each DataFrame
+voter_df = voter_df.withColumn('ROW_ID', F.monotonically_increasing_id())
+voter_df_single = voter_df_single.withColumn('ROW_ID', F.monotonically_increasing_id())
+
+# Show the top 10 IDs in each DataFrame 
+voter_df.orderBy(voter_df.ROW_ID.desc()).show(10)
+# +--------------------+------+
+# |          VOTER NAME|ROW_ID|
+# +--------------------+------+
+# |        Lee Kleinman|    35|
+# |  the  final  201...|    34|
+# |         Erik Wilson|    33|
+# |  the  final   20...|    32|
+# | Carolyn King Arnold|    31|
+# | Rickey D.  Callahan|    30|
+# |   the   final  2...|    29|
+# |    Monica R. Alonzo|    28|
+# |     Lee M. Kleinman|    27|
+# |   Jennifer S. Gates|    26|
+# +--------------------+------+
+voter_df_single.orderBy(voter_df_single.ROW_ID.desc()).show(10)
+# +--------------------+------+
+# |          VOTER NAME|ROW_ID|
+# +--------------------+------+
+# |        Lee Kleinman|    35|
+# |  the  final  201...|    34|
+# |         Erik Wilson|    33|
+# |  the  final   20...|    32|
+# | Carolyn King Arnold|    31|
+# | Rickey D.  Callahan|    30|
+# |   the   final  2...|    29|
+# |    Monica R. Alonzo|    28|
+# |     Lee M. Kleinman|    27|
+# |   Jennifer S. Gates|    26|
+# +--------------------+------+
+
+# Determine the highest ROW_ID and save it in previous_max_ID
