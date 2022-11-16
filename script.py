@@ -6,7 +6,6 @@ import pyspark.ml.evaluation as evals
 import pyspark.ml.tuning as tune
 
 
-
 # Average duration of Delta flights
 flights.filter(flights.carrier == "DL").filter(flights.origin == "SEA").groupBy().avg("air_time").show()
 
