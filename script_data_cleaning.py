@@ -204,3 +204,4 @@ voter_df_single.orderBy(voter_df_single.ROW_ID.desc()).show(10)
 # +--------------------+------+
 
 # Determine the highest ROW_ID and save it in previous_max_ID
+
